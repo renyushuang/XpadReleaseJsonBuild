@@ -136,7 +136,8 @@ def getAdExtraTypeValue(platformValue, adDetailsValue, adSourceIdValue):
             return AD_TYPE_KSH_FEED
         if hasAdTypeString(adDetailsValuelist, AD_TYPE_PLATE_RENDER):
             return AD_TYPE_KSH_PERSONAL_PLATE_FEED
-        if hasAdTypeString(adDetailsValuelist, AD_TYPE_FULL_SCREEN_VIDEO) or hasAdTypeString(adDetailsValuelist, AD_TYPE_INTERSTITIAL):
+        if hasAdTypeString(adDetailsValuelist, AD_TYPE_FULL_SCREEN_VIDEO) or hasAdTypeString(adDetailsValuelist,
+                                                                                             AD_TYPE_INTERSTITIAL):
             return AD_TYPE_KSH_FULL_SCREEN_VIDEO
         if hasAdTypeString(adDetailsValuelist, AD_TYPE_NATIVE):
             return AD_TYPE_KSH_PERSONAL_PLATE_FEED
@@ -149,6 +150,17 @@ def getAdExtraTypeValue(platformValue, adDetailsValue, adSourceIdValue):
         exit()
 
     print("不支持这种类型 " + adDetailsValue + "id为 = " + str(adSourceIdValue))
+    return None
+
+
+def get_merged_cells_value(adSheet, row_index, col_index):
+    merged = adSheet.merged_cells
+    for (min_col, min_row, max_col, max_row) in merged:
+        if (row_index >= min_row[1] and row_index <= max_row[1]):
+            if (col_index >= min_col[1] and col_index <= max_col[1]):
+                cell_value = adSheet.cell(min_row[1], min_col[1])
+                # print('该单元格[%d,%d]属于合并单元格，值为[%s]' % (row_index, col_index, cell_value.value))
+                return cell_value.value
     return None
 
 
@@ -191,6 +203,11 @@ def addChannelIds(slot, adSheet):
             elif adUnitNameValue.find(AD_TYPE_INTERSTITIAL) > 0:
                 adSidItem["type"] = 2
                 extra["image_ratio"] = "2:3"
+        else:
+            # 跳过不属于当前单元格的输出
+            merged_value = get_merged_cells_value(adSheet, currentIndex, 4)
+            if merged_value != adSidItem["sid"]:
+                continue
 
         platformValue = getCloumeValueColumValue(currentIndex, "Platform", adSheet)
         if platformValue is None:
@@ -226,9 +243,9 @@ def addChannelIds(slot, adSheet):
                     key = "subtype_" + platformValue
                     extra[key] = 2
             elif adDetailsValue.find(AD_TYPE_OPEN) > 0:
-                    extra["subtype"] = 1
-                    key = "subtype_" + platformValue
-                    extra[key] = 1
+                extra["subtype"] = 1
+                key = "subtype_" + platformValue
+                extra[key] = 1
 
 
         elif adSidItem.get("type") == 2:

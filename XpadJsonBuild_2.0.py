@@ -1,5 +1,6 @@
 # coding=utf-8
 import openpyxl, os, json, sys
+from openpyxl.worksheet.worksheet import Worksheet
 
 AD_TYPE_OPEN = "开屏"
 AD_TYPE_NATIVE_PLATE = "原生模版"
@@ -77,7 +78,7 @@ def getTitleColumValue(name, adSheet):
     return ""
 
 
-def getCloumeValueColumValue(row, name, adSheet):
+def getCloumeValueColumValue(row, name, adSheet: Worksheet):
     index = findTitleInColum(name, adSheet)
     value = adSheet.cell(row=row, column=index).value
 
@@ -151,12 +152,26 @@ def getAdExtraTypeValue(platformValue, adDetailsValue, adSourceIdValue):
     print("不支持这种类型 " + adDetailsValue + "id为 = " + str(adSourceIdValue))
     return None
 
+
+def get_merged_cells_value(adSheet, row_index, col_index):
+    merged = adSheet.merged_cells
+    for (min_col, min_row, max_col, max_row) in merged:
+        if (row_index >= min_row[1] and row_index <= max_row[1]):
+            if (col_index >= min_col[1] and col_index <= max_col[1]):
+                cell_value = adSheet.cell(min_row[1], min_col[1])
+                # print('该单元格[%d,%d]属于合并单元格，值为[%s]' % (row_index, col_index, cell_value.value))
+                return cell_value.value
+    return None
+
+
 def addChannelIds(slot: list, adSheet):
     maxColum = adSheet.max_row
     channels = {}
     channelDatas = []
     adPriorityList = []
+
     for sidRowIndex in range(1, maxColum):
+
         currentIndex = sidRowIndex + 1
         sidValue = getCloumeValueColumValue(currentIndex, "sid", adSheet)
 
@@ -167,10 +182,15 @@ def addChannelIds(slot: list, adSheet):
             channels["channels"] = channelDatas
             slot.append(channels)
             channels["sid"] = sidValue
+        else:
+            # 跳过不属于当前单元格的输出
+            merged_value = get_merged_cells_value(adSheet, currentIndex, 4)
+            if merged_value != channels["sid"]:
+                continue
 
         platformValue = getCloumeValueColumValue(currentIndex, "Platform", adSheet)
         if platformValue is None:
-            print("Platform is None sid = " + str(channels["sid"]))
+            print("Platform is None sid = " + str(channels["sid"]) + "----- 行 = " + str(currentIndex))
             continue
 
         adSourceIdValue = getCloumeValueColumValue(currentIndex, "广告ID", adSheet)
@@ -209,7 +229,6 @@ def addChannelIds(slot: list, adSheet):
                 channelDatas.append(channelItem)
                 adPriorityList.append(adPriorityValue)
             else:
-
                 for i in range(0, adPriorityValue + 1):
                     currentPriorityIndex = adPriorityValue - i
                     if currentPriorityIndex == 0:
@@ -248,7 +267,8 @@ def main():
     # 开始读取
     wb = openpyxl.load_workbook(excelPath)
     sheetNames = wb.sheetnames
-    adSheet = wb[str(sheetNames[0])]
+    adSheet: Worksheet = wb[str(sheetNames[0])]
+
     maxColumn = int(adSheet.max_column)
 
     print("最大列 = " + str(maxColumn))
