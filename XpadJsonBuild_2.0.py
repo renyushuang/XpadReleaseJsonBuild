@@ -63,7 +63,7 @@ def findTitleInColum(name, adSheet):
         if titleValue == name:
             return columnIndex + 1
 
-    print("title 不存在 -" + name)
+    print("title 不存在 --" + name)
     exit()
 
 
@@ -73,7 +73,7 @@ def getTitleColumValue(name, adSheet):
     if value is not None:
         return value
 
-    print("当前 " + name + "值为 None")
+    print("当前 -- " + name + "值为 None")
 
     return ""
 
@@ -190,12 +190,12 @@ def addChannelIds(slot: list, adSheet):
 
         platformValue = getCloumeValueColumValue(currentIndex, "Platform", adSheet)
         if platformValue is None:
-            print("Platform is None sid = " + str(channels["sid"]) + "----- 行 = " + str(currentIndex))
+            print("Platform is None --- sid = " + str(channels["sid"]) + "----- 行 = " + str(currentIndex))
             continue
 
         adSourceIdValue = getCloumeValueColumValue(currentIndex, "广告ID", adSheet)
         if adSourceIdValue is None:
-            print("广告ID is None sid = " + str(channels["sid"]))
+            print("广告ID is None --- sid = " + str(channels["sid"]) + "----- 行 = " + str(currentIndex))
             continue
 
         adWatingTimeValue = getCloumeValueColumValue(currentIndex, "广告超时时间", adSheet)

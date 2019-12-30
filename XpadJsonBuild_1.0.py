@@ -63,7 +63,7 @@ def findTitleInColum(name, adSheet):
         if titleValue == name:
             return columnIndex + 1
 
-    print("title 不存在 -" + name)
+    print("title 不存在 -- " + name)
     exit()
 
 
@@ -98,7 +98,7 @@ def hasAdTypeString(adDetailsValuelist: list, typeName):
 def getAdExtraTypeValue(platformValue, adDetailsValue, adSourceIdValue):
     adDetailsValuelist: list = adDetailsValue.split("-")
     if len(adDetailsValuelist) < 2:
-        print("备注 命名错误" + str(adSourceIdValue))
+        print("备注 命名错误 -- " + str(adSourceIdValue))
 
     if platformValue == AD_TYPE_CSJ:
         if hasAdTypeString(adDetailsValuelist, AD_TYPE_OPEN):
@@ -114,7 +114,7 @@ def getAdExtraTypeValue(platformValue, adDetailsValue, adSourceIdValue):
         elif hasAdTypeString(adDetailsValuelist, AD_TYPE_BANNER):
             return AD_TYPE_CSJ_PERSONAL_PLATE_BANNER
         else:
-            print("不支持这种类型 " + adDetailsValue + "穿山甲的广告id为 = " + str(adSourceIdValue))
+            print("不支持这种类型 -- " + adDetailsValue + " -- 穿山甲的广告id为 = " + str(adSourceIdValue))
 
     elif platformValue == AD_TYPE_YLH:
         if hasAdTypeString(adDetailsValuelist, AD_TYPE_OPEN):
@@ -128,7 +128,7 @@ def getAdExtraTypeValue(platformValue, adDetailsValue, adSourceIdValue):
         if hasAdTypeString(adDetailsValuelist, AD_TYPE_BANNER):
             return AD_TYPE_YLH_BANNER
         else:
-            print("不支持这种类型 " + adDetailsValue + "广点通id为 = " + str(adSourceIdValue))
+            print("不支持这种类型 --  " + adDetailsValue + "-- 广点通id为 = " + str(adSourceIdValue))
 
         pass
     elif platformValue == AD_TYPE_KSH:
@@ -142,14 +142,14 @@ def getAdExtraTypeValue(platformValue, adDetailsValue, adSourceIdValue):
         if hasAdTypeString(adDetailsValuelist, AD_TYPE_NATIVE):
             return AD_TYPE_KSH_PERSONAL_PLATE_FEED
         else:
-            print("不支持这种类型 " + adDetailsValue + "快手id为 = " + str(adSourceIdValue))
+            print("不支持这种类型 -- " + adDetailsValue + "-- 快手id为 = " + str(adSourceIdValue))
 
         pass
     else:
         print("没有这个类型 广告id是 = " + str(adSourceIdValue))
         exit()
 
-    print("不支持这种类型 " + adDetailsValue + "id为 = " + str(adSourceIdValue))
+    print("不支持这种类型 -- " + adDetailsValue + "-- id为 = " + str(adSourceIdValue))
     return None
 
 
@@ -211,17 +211,17 @@ def addChannelIds(slot, adSheet):
 
         platformValue = getCloumeValueColumValue(currentIndex, "Platform", adSheet)
         if platformValue is None:
-            print("Platform is None sid = " + str(adSidItem["sid"]))
+            print("Platform is None -- sid = " + str(adSidItem["sid"]) + "----- 行 = " + str(currentIndex))
             continue
 
         adSourceIdValue = getCloumeValueColumValue(currentIndex, "广告ID", adSheet)
         if adSourceIdValue is None:
-            print("广告ID is None sid = " + str(adSidItem["sid"]))
+            print("广告ID is None -- sid = " + str(adSidItem["sid"]) + "----- 行 = " + str(currentIndex))
             continue
 
         adDetailsValue: str = getCloumeValueColumValue(currentIndex, "备注", adSheet)
         if adDetailsValue is None:
-            print("备注内容为None  跳过= " + str(adSourceIdValue))
+            print("备注内容为None  跳过 = " + str(adSourceIdValue))
             continue
 
         adExtraType = getAdExtraTypeValue(platformValue, adDetailsValue, adSourceIdValue)
