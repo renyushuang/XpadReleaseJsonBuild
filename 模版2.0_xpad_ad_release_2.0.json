@@ -1,0 +1,142 @@
+{
+    "ls": "011526754232417bac04cb066ff41d1d",
+    "rt": 20,
+    "data": {
+        "ls": "011526754232417bac04cb066ff41d1d",
+        "csj": 5039119,
+        "ylh": 1110087106,
+        "ksh": 11111111,
+        "appid": 2222222,
+        "slot": [
+            {
+                "channels": [
+                    {
+                        "extra": {
+                            "type": 11
+                        },
+                        "channel": "csj",
+                        "pid": "839119524",
+                        "wt": 4000,
+                        "ttl": 40
+                    }
+                ],
+                "sid": "10099"
+            },
+            {
+                "channels": [
+                    {
+                        "extra": {
+                            "type": 14,
+                            "dip_w": "300",
+                            "dip_h": "250"
+                        },
+                        "channel": "csj",
+                        "pid": "2",
+                        "wt": 4000,
+                        "ttl": 50
+                    },
+                    {
+                        "extra": {
+                            "type": 24,
+                            "pixel_w": "300",
+                            "pixel_h": "250"
+                        },
+                        "channel": "ylh",
+                        "pid": "3",
+                        "wt": 5000,
+                        "ttl": 40
+                    },
+                    {
+                        "extra": {
+                            "type": 31
+                        },
+                        "channel": "ksh",
+                        "pid": "1",
+                        "wt": 3000,
+                        "ttl": 60
+                    }
+                ],
+                "sid": "10100"
+            },
+            {
+                "channels": [
+                    {
+                        "extra": {
+                            "type": 14,
+                            "dip_w": "300",
+                            "dip_h": "250"
+                        },
+                        "channel": "csj",
+                        "pid": "939119995",
+                        "wt": 4000,
+                        "ttl": 40
+                    },
+                    {
+                        "extra": {
+                            "type": 31
+                        },
+                        "channel": "ksh",
+                        "pid": "5011000119",
+                        "wt": 4000,
+                        "ttl": 40
+                    },
+                    {
+                        "extra": {
+                            "type": 24,
+                            "pixel_w": "300",
+                            "pixel_h": "250"
+                        },
+                        "channel": "ylh",
+                        "pid": "5040698279101743",
+                        "wt": 4000,
+                        "ttl": 40
+                    }
+                ],
+                "sid": "10318"
+            },
+            {
+                "channels": [
+                    {
+                        "extra": {
+                            "type": 15
+                        },
+                        "channel": "csj",
+                        "pid": 0,
+                        "wt": 4000,
+                        "ttl": 40
+                    },
+                    {
+                        "extra": {
+                            "type": 33
+                        },
+                        "channel": "ksh",
+                        "pid": 1,
+                        "wt": 4000,
+                        "ttl": 40
+                    },
+                    {
+                        "extra": {
+                            "type": 16,
+                            "image_ratio": "2:3"
+                        },
+                        "channel": "csj",
+                        "pid": 2,
+                        "wt": 4000,
+                        "ttl": 40
+                    },
+                    {
+                        "extra": {
+                            "type": 33
+                        },
+                        "channel": "ksh",
+                        "pid": 4,
+                        "wt": 4000,
+                        "ttl": 40
+                    }
+                ],
+                "sid": "10286"
+            }
+        ]
+    },
+    "status": 1
+}
