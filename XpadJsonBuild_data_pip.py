@@ -1,5 +1,5 @@
 # coding=utf-8
-import openpyxl, os, json, sys
+import openpyxl, os, json, sys, logging
 
 AD_TYPE_OPEN = "开屏"
 AD_TYPE_NATIVE_PLATE = "原生模版"
@@ -62,7 +62,7 @@ def findTitleInColum(name, adSheet):
         if titleValue == name:
             return columnIndex + 1
 
-    print("title 不存在 -" + name)
+    logging.error("title 不存在 -" + name)
     exit()
 
 
@@ -72,7 +72,7 @@ def getTitleColumValue(name, adSheet):
     if value is not None:
         return value
 
-    print("当前 " + name + "值为 None")
+    logging.warning("当前 " + name + "值为 None")
 
     return ""
 
@@ -97,7 +97,7 @@ def hasAdTypeString(adDetailsValuelist: list, typeName):
 def getAdExtraTypeValue(platformValue, adDetailsValue, adSourceIdValue):
     adDetailsValuelist: list = adDetailsValue.split("-")
     if len(adDetailsValuelist) < 2:
-        print("备注 命名错误" + str(adSourceIdValue))
+        logging.error("备注 命名错误" + str(adSourceIdValue))
 
     if platformValue == AD_TYPE_CSJ:
         if hasAdTypeString(adDetailsValuelist, AD_TYPE_OPEN):
@@ -113,7 +113,7 @@ def getAdExtraTypeValue(platformValue, adDetailsValue, adSourceIdValue):
         elif hasAdTypeString(adDetailsValuelist, AD_TYPE_BANNER):
             return AD_TYPE_CSJ_PERSONAL_PLATE_BANNER
         else:
-            print("不支持这种类型 " + adDetailsValue + "穿山甲的广告id为 = " + str(adSourceIdValue))
+            logging.error("不支持这种类型 " + adDetailsValue + "穿山甲的广告id为 = " + str(adSourceIdValue))
 
     elif platformValue == AD_TYPE_YLH:
         if hasAdTypeString(adDetailsValuelist, AD_TYPE_OPEN):
@@ -127,7 +127,7 @@ def getAdExtraTypeValue(platformValue, adDetailsValue, adSourceIdValue):
         if hasAdTypeString(adDetailsValuelist, AD_TYPE_BANNER):
             return AD_TYPE_YLH_BANNER
         else:
-            print("不支持这种类型 " + adDetailsValue + "广点通id为 = " + str(adSourceIdValue))
+            logging.error("不支持这种类型 " + adDetailsValue + "广点通id为 = " + str(adSourceIdValue))
 
         pass
     elif platformValue == AD_TYPE_KSH:
@@ -141,14 +141,14 @@ def getAdExtraTypeValue(platformValue, adDetailsValue, adSourceIdValue):
         if hasAdTypeString(adDetailsValuelist, AD_TYPE_NATIVE):
             return AD_TYPE_KSH_PERSONAL_PLATE_FEED
         else:
-            print("不支持这种类型 " + adDetailsValue + "快手id为 = " + str(adSourceIdValue))
+            logging.error("不支持这种类型 " + adDetailsValue + "快手id为 = " + str(adSourceIdValue))
 
         pass
     else:
-        print("没有这个类型 广告id是 = " + str(adSourceIdValue))
+        logging.error("没有这个类型 广告id是 = " + str(adSourceIdValue))
         exit()
 
-    print("不支持这种类型 " + adDetailsValue + "id为 = " + str(adSourceIdValue))
+    logging.error("不支持这种类型 " + adDetailsValue + "id为 = " + str(adSourceIdValue))
     return None
 
 
@@ -171,7 +171,7 @@ def addChannelIds(slot: list, adSheet):
                 sidDataPipItem["ad_refr_sw"] = False
                 sidDataPipItem["ad_refr_it"] = 10000
                 sidDataPipItem["ad_refr_t_u"] = 10
-                print("" + adUnitNameValue + "----" + str(sidDataPipItem["ad_refr_sw"]))
+                logging.info("" + adUnitNameValue + "----" + str(sidDataPipItem["ad_refr_sw"]))
             elif adUnitNameValue.find(AD_TYPE_INTERSTITIAL) > 0:
                 sidDataPipItem["ad_sw_o"] = True
                 sidDataPipItem["ad_sw_n"] = True
@@ -180,7 +180,7 @@ def addChannelIds(slot: list, adSheet):
                 sidDataPipItem["ad_refr_sw"] = False
                 sidDataPipItem["ad_refr_it"] = 10000
                 sidDataPipItem["ad_refr_t_u"] = 10
-                print("" + adUnitNameValue + "----" + str(sidDataPipItem["ad_refr_sw"]))
+                logging.info("" + adUnitNameValue + "----" + str(sidDataPipItem["ad_refr_sw"]))
             elif adUnitNameValue.find(AD_TYPE_NATIVE) > 0:
                 sidDataPipItem["ad_sw_o"] = True
                 sidDataPipItem["ad_sw_n"] = True
@@ -189,9 +189,9 @@ def addChannelIds(slot: list, adSheet):
                 sidDataPipItem["ad_refr_sw"] = True
                 sidDataPipItem["ad_refr_it"] = 10000
                 sidDataPipItem["ad_refr_t_u"] = 10
-                print("" + adUnitNameValue + "----" + str(sidDataPipItem["ad_refr_sw"]))
+                logging.info("" + adUnitNameValue + "----" + str(sidDataPipItem["ad_refr_sw"]))
             else:
-                print("这个类型不支持" + adUnitNameValue)
+                logging.warning("这个类型不支持" + adUnitNameValue)
 
         # platformValue = getCloumeValueColumValue(currentIndex, "Platform", adSheet)
         # adSourceIdValue = getCloumeValueColumValue(currentIndex, "广告ID", adSheet)
@@ -226,23 +226,24 @@ def main():
 
 
 if __name__ == '__main__':
-    print("XPAD 2.0 json脚本生成工具")
+    logging.basicConfig(level=logging.INFO)
+    logging.info("XPAD 2.0 json脚本生成工具")
     argLen = len(sys.argv)
     if argLen < 2:
-        print("请输入想要解析的文件")
+        logging.error("请输入想要解析的文件")
         exit()
     excelPath = sys.argv[1]
 
     if not os.path.exists(excelPath):
-        print("需要解析的Excel文件 不存在")
+        logging.error("需要解析的Excel文件 不存在")
         exit()
 
     fileSub = os.path.splitext(os.path.basename(excelPath))[1]
     if fileSub != ".xlsx":
-        print("请输入正确的Excel文件->" + fileSub)
+        logging.error("请输入正确的Excel文件->" + fileSub)
         exit()
-    print("请确保需要解析的广告数据表在第一个...")
-    print("开始生成 ...")
+    logging.warning("请确保需要解析的广告数据表在第一个...")
+    logging.info("开始生成 ...")
 
     main()
 
@@ -250,7 +251,7 @@ if __name__ == '__main__':
     fileName = os.path.splitext(os.path.basename(excelPath))[0]
     fileDir = os.path.dirname(excelPath)
     resultAdFileJson = os.path.join(fileDir, fileName + "_xpad_ad_release_data_pip.json")
-    print(resultAdFileJson)
+    logging.info(resultAdFileJson)
 
     if os.path.exists(resultAdFileJson):
         resultAdFile = open(resultAdFileJson, 'w')
@@ -260,4 +261,4 @@ if __name__ == '__main__':
         resultAdFile = open(resultAdFileJson, 'a')
         resultAdFile.write(jsonResult)
         resultAdFile.close()
-    print("生成成功")
+    logging.info("生成成功")
