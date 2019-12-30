@@ -223,24 +223,34 @@ def addChannelIds(slot: list, adSheet):
         adPriorityValue = getCloumeValueColumValue(currentIndex, "广告优先级", adSheet)
 
         if adPriorityValue is not None:
-            # print("当前优先级 = " + str(channels["sid"]) + "---" + str(adPriorityValue))
-            channelDataslength = len(channelDatas)
-            if adPriorityValue >= channelDataslength:
+            adPriorityListlength = len(adPriorityList)
+
+            if adPriorityListlength == 0:
                 channelDatas.append(channelItem)
                 adPriorityList.append(adPriorityValue)
             else:
-                for i in range(0, adPriorityValue + 1):
-                    currentPriorityIndex = adPriorityValue - i
-                    if currentPriorityIndex == 0:
-                        channelDatas.insert(currentPriorityIndex, channelItem)
-                    elif adPriorityList[currentPriorityIndex] < adPriorityValue:
-                        channelDatas.insert(currentPriorityIndex + 1, channelItem)
+                for i in range(0, adPriorityListlength):
+                    if adPriorityValue <= adPriorityList[i]:
+                        adPriorityList.insert(i, adPriorityValue)
+                        channelDatas.insert(i, channelItem)
                         break
-                adPriorityList.append(adPriorityValue)
-
+                    else:
+                        # i+1 小于最长的长度，可以再向前进一格子
+                        if (i + 1) < adPriorityListlength:
+                            continue
+                        else:
+                            # i+1 超出了长度 数据等于排序长度
+                            if len(channelDatas) <= adPriorityListlength:
+                                adPriorityList.append(adPriorityValue)
+                                channelDatas.append(channelItem)
+                            else:
+                                adPriorityList.append(adPriorityValue)
+                                channelDatas.insert(i + 1, channelItem)
 
         else:
             channelDatas.append(channelItem)
+
+        # print("优先级顺序 -- " + str(adPriorityList))
 
         channelItem["extra"] = channelItemExtra
         channelItem["channel"] = platformValue
