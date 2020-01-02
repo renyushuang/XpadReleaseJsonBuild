@@ -7,14 +7,16 @@ Usage:
 
 from setuptools import setup
 
-APP = ['XpadJsonBuild_data_pip.py']
-DATA_FILES = []
-OPTIONS = {}
+APP = ['XpadJsonBuild_GUI.py']
+DATA_FILES = ['XpadJsonBuild_data_pip.py','XpadJsonBuild_2.py','XpadJsonBuild_1.py']
+DATA_FILES = ['XpadJsonBuild_data_pip.py','XpadJsonBuild_2.py','XpadJsonBuild_1.py']
+OPTIONS = {
+    'argv_emulation': True,
+    'includes': ['openpyxl','Tkinter','defusedxml','xmlrpclib'],}
 
 setup(
     app=APP,
     data_files=DATA_FILES,
     options={'py2app': OPTIONS},
     setup_requires=['py2app'],
-    install_requires=['openpyxl']
 )

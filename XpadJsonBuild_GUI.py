@@ -3,6 +3,10 @@ import os
 from tkinter import *
 from tkinter import filedialog
 
+import XpadJsonBuild_data_pip
+import XpadJsonBuild_1
+import XpadJsonBuild_2
+
 filename = None
 path = None
 selectValue: IntVar = None
@@ -26,11 +30,11 @@ def startCreateJson():
     global selectValue
     value = selectValue.get()
     if value == 1:
-        os.system("python3 XpadJsonBuild_1.0.py %s" % filename)
+        XpadJsonBuild_1.creatMainUi()
     if value == 2:
-        os.system("python3 XpadJsonBuild_2.0.py %s" % filename)
+        XpadJsonBuild_2.creatMainUi()
     if value == 3:
-        os.system("python3 XpadJsonBuild_data_pip.py %s" % filename)
+        XpadJsonBuild_data_pip.creatMainUi()
     pass
 
 
@@ -48,13 +52,7 @@ def creatMainUi():
     selectValue = IntVar()
     selectValue.set(1)
 
-    topFrame = Frame(root)
-    topFrame.pack(side=TOP)
 
-    Label(topFrame, text="目标路径:").pack(side=LEFT, padx=5, pady=10)
-    Entry(topFrame, textvariable=path).pack(side=LEFT, padx=5, pady=10)
-    Button(topFrame, text="路径选择", command=selectPath).pack(side=LEFT, padx=5, pady=10)
-    Button(topFrame, text="开始生成", command=startCreateJson).pack(side=LEFT, padx=5, pady=10)
 
     middleFrame = Frame(root)
     middleFrame.pack(side=TOP)
@@ -68,13 +66,9 @@ def creatMainUi():
     rb3 = Radiobutton(middleFrame, text='data_pip.py', variable=selectValue, value=3)
     rb3.pack(side=LEFT)
 
-    bottomFrame = Frame(root)
-    scrollbar = Scrollbar(bottomFrame)
-    scrollbar.pack(side=RIGHT, fill=Y)
-    listBox = Listbox(root, yscrollcommand=scrollbar.set)
-    scrollbar.config(command=listBox.yview)
-    listBox.pack(side=LEFT, fill=BOTH, expand=YES, pady=10)
-    bottomFrame.pack(side=TOP, fill=BOTH, expand=YES)
+    Button(middleFrame, text="选择", command=startCreateJson).pack(side=LEFT, padx=5, pady=10)
+
+
 
     root.mainloop()
 
