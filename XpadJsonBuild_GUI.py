@@ -1,6 +1,7 @@
 import os
 
 from tkinter import *
+from tkinter import ttk
 from tkinter import filedialog
 from PIL import ImageTk
 
@@ -68,8 +69,7 @@ def creatMainUi():
     rb3 = Radiobutton(middleFrame, text='data_pip.py', variable=selectValue, value=3)
     rb3.pack(side=LEFT)
 
-    img = ImageTk.PhotoImage(file="./resource/button_selecter.png")
-    Button(middleFrame, text="选择", image=img, command=startCreateJson).pack(side=LEFT, padx=5, pady=10)
+    ttk.Button(middleFrame, text="选择", command=startCreateJson).pack(side=LEFT, padx=5, pady=10)
 
     bottomFrame = Frame(root)
     bottomFrame.pack(side=TOP)

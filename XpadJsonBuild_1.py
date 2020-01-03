@@ -2,6 +2,7 @@
 import openpyxl, os, json, sys, logging
 from tkinter import *
 from tkinter import filedialog
+from tkinter import ttk
 import datetime
 
 AD_TYPE_OPEN = "开屏"
@@ -391,8 +392,8 @@ def creatMainUi():
 
     Label(topFrame, text="目标路径:").pack(side=LEFT, padx=5, pady=10)
     Entry(topFrame, textvariable=path).pack(side=LEFT, padx=5, pady=10)
-    Button(topFrame, text="路径选择", command=selectPath).pack(side=LEFT, padx=5, pady=10)
-    Button(topFrame, text="开始生成", command=startCreateJson).pack(side=LEFT, padx=5, pady=10)
+    ttk.Button(topFrame, text="路径选择", command=selectPath).pack(side=LEFT, padx=5, pady=10)
+    ttk.Button(topFrame, text="开始生成", command=startCreateJson).pack(side=LEFT, padx=5, pady=10)
 
     bottomFrame = Frame(root)
     scrollbar = Scrollbar(bottomFrame)
