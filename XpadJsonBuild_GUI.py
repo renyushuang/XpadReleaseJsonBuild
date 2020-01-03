@@ -7,6 +7,9 @@ import XpadJsonBuild_data_pip
 import XpadJsonBuild_1
 import XpadJsonBuild_2
 
+# 生成应用
+# sudo pyinstaller XpadJsonBuild_GUI.py -p XpadJsonBuild_1.py -p XpadJsonBuild_2.py -p XpadJsonBuild_data_pip.py --hidden-import XpadJsonBuild_1 --hidden-import XpadJsonBuild_2 --hidden-import XpadJsonBuild_data_pip
+
 filename = None
 path = None
 selectValue: IntVar = None
@@ -71,6 +74,7 @@ def creatMainUi():
 
 
     root.mainloop()
+
 
 if __name__ == '__main__':
     creatMainUi()
