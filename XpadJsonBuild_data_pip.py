@@ -1,13 +1,13 @@
 # coding=utf-8
 import datetime
+import json
+import logging
+import os
 from tkinter import *
 from tkinter import filedialog
 from tkinter import ttk
 
-import json
-import logging
 import openpyxl
-import os
 
 AD_TYPE_OPEN = "开屏"
 AD_TYPE_NATIVE_PLATE = "原生模版"
@@ -67,6 +67,7 @@ path = None
 listBox: Listbox = None
 native_ad_refr_it: IntVar = None
 native_ad_refr_t_u: IntVar = None
+native_ad_new_usr_st = None
 
 
 def insertListBoxMessage(item):
@@ -187,6 +188,9 @@ def addChannelIds(slot: list, adSheet):
     for sidRowIndex in range(1, maxColum):
         currentIndex = sidRowIndex + 1
         sidValue = getCloumeValueColumValue(currentIndex, "sid", adSheet)
+        native_ad_new_usr_stValue = 253370736000000
+        if native_ad_new_usr_st is not None:
+            native_ad_new_usr_stValue = native_ad_new_usr_st.get()
 
         if sidValue is not None:
             sidDataPipItem = {}
@@ -196,7 +200,8 @@ def addChannelIds(slot: list, adSheet):
                 sidDataPipItem["ad_sw_o"] = True
                 sidDataPipItem["ad_sw_n"] = True
                 sidDataPipItem["ad_pro_h"] = 0
-                sidDataPipItem["ad_new_usr_st"] = native_ad_new_usr_st.get()
+
+                sidDataPipItem["ad_new_usr_st"] = native_ad_new_usr_stValue
                 sidDataPipItem["ad_refr_sw"] = False
                 sidDataPipItem["ad_refr_it"] = 10000
                 sidDataPipItem["ad_refr_t_u"] = 10
@@ -206,7 +211,7 @@ def addChannelIds(slot: list, adSheet):
                 sidDataPipItem["ad_sw_o"] = True
                 sidDataPipItem["ad_sw_n"] = True
                 sidDataPipItem["ad_pro_h"] = 0
-                sidDataPipItem["ad_new_usr_st"] = native_ad_new_usr_st.get()
+                sidDataPipItem["ad_new_usr_st"] = native_ad_new_usr_stValue
                 sidDataPipItem["ad_refr_sw"] = False
                 sidDataPipItem["ad_refr_it"] = 10000
                 sidDataPipItem["ad_refr_t_u"] = 10
@@ -216,10 +221,19 @@ def addChannelIds(slot: list, adSheet):
                 sidDataPipItem["ad_sw_o"] = True
                 sidDataPipItem["ad_sw_n"] = True
                 sidDataPipItem["ad_pro_h"] = 0
-                sidDataPipItem["ad_new_usr_st"] = native_ad_new_usr_st.get()
+                sidDataPipItem["ad_new_usr_st"] = native_ad_new_usr_stValue
                 sidDataPipItem["ad_refr_sw"] = True
-                sidDataPipItem["ad_refr_it"] = native_ad_refr_it.get()
-                sidDataPipItem["ad_refr_t_u"] = native_ad_refr_t_u.get()
+
+                ad_refr_it = 10000
+                if native_ad_refr_it is not None:
+                    ad_refr_it = native_ad_refr_it.get()
+
+                ad_refr_t_u = 10000
+                if native_ad_refr_t_u is not None:
+                    ad_refr_t_u = native_ad_refr_t_u.get()
+
+                sidDataPipItem["ad_refr_it"] = ad_refr_it
+                sidDataPipItem["ad_refr_t_u"] = ad_refr_t_u
                 insertListBoxMessage("" + adUnitNameValue + "----" + str(sidDataPipItem["ad_refr_sw"]))
                 logging.info("" + adUnitNameValue + "----" + str(sidDataPipItem["ad_refr_sw"]))
             else:
