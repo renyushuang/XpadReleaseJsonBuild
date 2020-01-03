@@ -2,6 +2,7 @@ import os
 
 from tkinter import *
 from tkinter import filedialog
+from PIL import ImageTk
 
 import XpadJsonBuild_data_pip
 import XpadJsonBuild_1
@@ -38,7 +39,6 @@ def startCreateJson():
         XpadJsonBuild_2.creatMainUi()
     if value == 3:
         XpadJsonBuild_data_pip.creatMainUi()
-    pass
 
 
 def creatMainUi():
@@ -50,12 +50,11 @@ def creatMainUi():
     root.title("XpadJsonBuild")
     root.geometry("1000x618")
     root.resizable(False, False)
+    root.config()
 
     path = StringVar()
     selectValue = IntVar()
     selectValue.set(1)
-
-
 
     middleFrame = Frame(root)
     middleFrame.pack(side=TOP)
@@ -69,9 +68,18 @@ def creatMainUi():
     rb3 = Radiobutton(middleFrame, text='data_pip.py', variable=selectValue, value=3)
     rb3.pack(side=LEFT)
 
-    Button(middleFrame, text="选择", command=startCreateJson).pack(side=LEFT, padx=5, pady=10)
+    img = ImageTk.PhotoImage(file="./resource/button_selecter.png")
+    Button(middleFrame, text="选择", image=img, command=startCreateJson).pack(side=LEFT, padx=5, pady=10)
 
+    bottomFrame = Frame(root)
+    bottomFrame.pack(side=TOP)
 
+    title: Text = Text(bottomFrame, width=50, height=5)
+    title.pack(side=TOP, padx=5, pady=10)
+    title.insert(INSERT, "简介")
+    content = '\n1.0 : Xpad1.0 广告json 生成工具 \n2.0 : Xpad2.0 广告json 生成工具 \ndata_pip : 产品数据通道 广告配置'
+    title.insert(INSERT, content)
+    title.config(state=DISABLED, font=("Arial", 20))
 
     root.mainloop()
 

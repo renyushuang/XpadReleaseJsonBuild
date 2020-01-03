@@ -2,6 +2,7 @@
 import openpyxl, os, json, sys, logging
 from tkinter import *
 from tkinter import filedialog
+import datetime
 
 AD_TYPE_OPEN = "开屏"
 AD_TYPE_NATIVE_PLATE = "原生模版"
@@ -230,7 +231,8 @@ def addChannelIds(slot, adSheet):
 
         platformValue = getCloumeValueColumValue(currentIndex, "Platform", adSheet)
         if platformValue is None:
-            insertListBoxMessage("Platform is None -- sid = " + str(adSidItem["sid"]) + "----- 行 = " + str(currentIndex))
+            insertListBoxMessage(
+                "Platform is None -- sid = " + str(adSidItem["sid"]) + "----- 行 = " + str(currentIndex))
             logging.error("Platform is None -- sid = " + str(adSidItem["sid"]) + "----- 行 = " + str(currentIndex))
             continue
 
@@ -332,7 +334,7 @@ def startAndBuild(excelPath):
         insertListBoxMessage("解析将会停止")
 
     insertListBoxMessage("请确保需要解析的广告数据表在第一个...")
-    insertListBoxMessage("开始生成 ...")
+    insertListBoxMessage("开始生成 ..." + str(datetime.datetime.now()))
 
     logging.warning("请确保需要解析的广告数据表在第一个...")
     logging.info("开始生成 ...")
@@ -361,6 +363,7 @@ def selectPath():
     global filename
     global path
     filename = filedialog.askopenfilename(filetypes=[("excel格式", "xlsx")])
+    insertListBoxMessage("选择路径 :" + filename)
     path.set(filename)
 
 
@@ -398,7 +401,8 @@ def creatMainUi():
     scrollbar.config(command=listBox.yview)
     listBox.pack(side=LEFT, fill=BOTH, expand=YES, pady=10)
     bottomFrame.pack(side=TOP, fill=BOTH, expand=YES)
-
+    insertListBoxMessage("欢迎来到XPAD 1.0 json脚本生成工具")
+    insertListBoxMessage("请选择路径 :")
     root.mainloop()
 
 
