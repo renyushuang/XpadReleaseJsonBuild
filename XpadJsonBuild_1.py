@@ -1,9 +1,13 @@
 # coding=utf-8
-import openpyxl, os, json, sys, logging
+import datetime
 from tkinter import *
 from tkinter import filedialog
 from tkinter import ttk
-import datetime
+
+import json
+import logging
+import openpyxl
+import os
 
 AD_TYPE_OPEN = "开屏"
 AD_TYPE_NATIVE_PLATE = "原生模版"
@@ -65,9 +69,9 @@ listBox: Listbox = None
 
 
 def insertListBoxMessage(item):
-    global listBox
-    listBox.insert("end", item)
-    listBox.see(END)
+    if listBox is not None:
+        listBox.insert("end", item)
+        listBox.see(END)
 
 
 def findTitleInColum(name, adSheet):
@@ -408,5 +412,10 @@ def creatMainUi():
 
 
 if __name__ == '__main__':
-    # startAndBuild()
-    creatMainUi()
+    argLen = len(sys.argv)
+
+    if argLen < 2:
+        creatMainUi()
+    else:
+        excelPath = sys.argv[1]
+        startAndBuild(excelPath)

@@ -1,11 +1,14 @@
 # coding=utf-8
-import openpyxl, os, json, sys, logging
-from openpyxl.worksheet.worksheet import Worksheet
+import datetime
 from tkinter import *
 from tkinter import filedialog
 from tkinter import ttk
-import datetime
 
+import json
+import logging
+import openpyxl
+import os
+from openpyxl.worksheet.worksheet import Worksheet
 
 AD_TYPE_OPEN = "开屏"
 AD_TYPE_NATIVE_PLATE = "原生模版"
@@ -67,8 +70,9 @@ listBox: Listbox = None
 
 def insertListBoxMessage(item):
     global listBox
-    listBox.insert("end", item)
-    listBox.see(END)
+    if listBox is not None:
+        listBox.insert("end", item)
+        listBox.see(END)
 
 
 def findTitleInColum(name, adSheet):
@@ -341,12 +345,6 @@ def startAndBuild(excelPath):
     insertListBoxMessage("XPAD 2.0 json脚本生成工具")
     logging.info("XPAD 2.0 json脚本生成工具")
 
-    # argLen = len(sys.argv)
-    # if argLen < 2:
-    #     logging.error("请输入想要解析的文件")
-    #     exit()
-    # excelPath = sys.argv[1]
-
     if not os.path.exists(excelPath):
         insertListBoxMessage("需要解析的Excel文件 不存在")
         logging.error("需要解析的Excel文件 不存在")
@@ -435,5 +433,10 @@ def creatMainUi():
 
 
 if __name__ == '__main__':
-    # startAndBuild()
-    creatMainUi()
+    argLen = len(sys.argv)
+
+    if argLen < 2:
+        creatMainUi()
+    else:
+        excelPath = sys.argv[1]
+        startAndBuild(excelPath)
