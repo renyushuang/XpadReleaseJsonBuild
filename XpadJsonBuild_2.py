@@ -1,13 +1,13 @@
 # coding=utf-8
 import datetime
+import json
+import logging
+import os
 from tkinter import *
 from tkinter import filedialog
 from tkinter import ttk
 
-import json
-import logging
 import openpyxl
-import os
 from openpyxl.worksheet.worksheet import Worksheet
 
 AD_TYPE_OPEN = "开屏"
@@ -66,6 +66,10 @@ mAdResultMap = {}
 filename = None
 path = None
 listBox: Listbox = None
+
+csj_id_test = "839119524"
+ylh_id_test = "6050194279806441"
+ksh_id_test = "5011000106"
 
 
 def insertListBoxMessage(item):
@@ -189,6 +193,26 @@ def get_merged_cells_value(adSheet, row_index, col_index):
     return None
 
 
+def checkPlatformValueData(platformValue, adSourceIdValue):
+    if platformValue == AD_TYPE_CSJ:
+        if len(str(adSourceIdValue)) != len(csj_id_test):
+            insertListBoxMessage(
+                "这个id对应的类型不太对- 类型 = " + str(platformValue) + " - 广告id = " + str(adSourceIdValue))
+            logging.warning("这个id对应的类型不太对- 类型 = " + str(platformValue) + " - 广告id = " + str(adSourceIdValue))
+
+    elif platformValue == AD_TYPE_YLH:
+        if len(str(adSourceIdValue)) != len(ylh_id_test):
+            insertListBoxMessage(
+                "这个id对应的类型不太对- 类型 = " + str(platformValue) + " - 广告id = " + str(adSourceIdValue))
+            logging.warning("这个id对应的类型不太对- 类型 = " + str(platformValue) + " - 广告id = " + str(adSourceIdValue))
+    elif platformValue == AD_TYPE_KSH:
+        if len(str(adSourceIdValue)) != len(ksh_id_test):
+            insertListBoxMessage(
+                "这个id对应的类型不太对- 类型 = " + str(platformValue) + " - 广告id = " + str(adSourceIdValue))
+            logging.warning("这个id对应的类型不太对- 类型 = " + str(platformValue) + " - 广告id = " + str(adSourceIdValue))
+    pass
+
+
 def addChannelIds(slot: list, adSheet):
     maxColum = adSheet.max_row
     channels = {}
@@ -247,6 +271,8 @@ def addChannelIds(slot: list, adSheet):
             continue
 
         adExtraType = getAdExtraTypeValue(platformValue, adDetailsValue, adSourceIdValue)
+
+        checkPlatformValueData(platformValue, adSourceIdValue)
 
         channelItem = {}
         channelItemExtra = {}

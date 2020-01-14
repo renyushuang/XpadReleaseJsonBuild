@@ -1,13 +1,13 @@
 # coding=utf-8
 import datetime
+import json
+import logging
+import os
 from tkinter import *
 from tkinter import filedialog
 from tkinter import ttk
 
-import json
-import logging
 import openpyxl
-import os
 
 AD_TYPE_OPEN = "开屏"
 AD_TYPE_NATIVE_PLATE = "原生模版"
@@ -58,6 +58,10 @@ AD_TYPE_KSH_FEED: int = 31
 AD_TYPE_KSH_PERSONAL_PLATE_FEED: int = 32
 # 快手全屏视频
 AD_TYPE_KSH_FULL_SCREEN_VIDEO: int = 33
+
+csj_id_test = "839119524"
+ylh_id_test = "6050194279806441"
+ksh_id_test = "5011000106"
 
 excelPath = ""
 
@@ -188,6 +192,26 @@ def get_merged_cells_value(adSheet, row_index, col_index):
     return None
 
 
+def checkPlatformValueData(platformValue, adSourceIdValue):
+    if platformValue == AD_TYPE_CSJ:
+        if len(str(adSourceIdValue)) != len(csj_id_test):
+            insertListBoxMessage(
+                "这个id对应的类型不太对- 类型 = " + str(platformValue) + " - 广告id = " + str(adSourceIdValue))
+            logging.warning("这个id对应的类型不太对- 类型 = " + str(platformValue) + " - 广告id = " + str(adSourceIdValue))
+
+    elif platformValue == AD_TYPE_YLH:
+        if len(str(adSourceIdValue)) != len(ylh_id_test):
+            insertListBoxMessage(
+                "这个id对应的类型不太对- 类型 = " + str(platformValue) + " - 广告id = " + str(adSourceIdValue))
+            logging.warning("这个id对应的类型不太对- 类型 = " + str(platformValue) + " - 广告id = " + str(adSourceIdValue))
+    elif platformValue == AD_TYPE_KSH:
+        if len(str(adSourceIdValue)) != len(ksh_id_test):
+            insertListBoxMessage(
+                "这个id对应的类型不太对- 类型 = " + str(platformValue) + " - 广告id = " + str(adSourceIdValue))
+            logging.warning("这个id对应的类型不太对- 类型 = " + str(platformValue) + " - 广告id = " + str(adSourceIdValue))
+    pass
+
+
 def addChannelIds(slot, adSheet):
     maxColum = adSheet.max_row
 
@@ -254,6 +278,8 @@ def addChannelIds(slot, adSheet):
             continue
 
         adExtraType = getAdExtraTypeValue(platformValue, adDetailsValue, adSourceIdValue)
+        checkPlatformValueData(platformValue, adSourceIdValue)
+
         if adSidItem.get("type") == 4:
             adSidItem[str(platformValue)] = adSourceIdValue
             if adDetailsValue.find(AD_TYPE_PLATE) > 0:
