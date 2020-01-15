@@ -1,16 +1,12 @@
-import os
-
 from tkinter import *
 from tkinter import ttk
-from tkinter import filedialog
-from PIL import ImageTk
 
-import XpadJsonBuild_data_pip
 import XpadJsonBuild_1
 import XpadJsonBuild_2
+import XpadJsonBuild_data_pip
 
 # 生成应用
-# sudo pyinstaller XpadJsonBuild_GUI.py -p XpadJsonBuild_1.py -p XpadJsonBuild_2.py -p XpadJsonBuild_data_pip.py --hidden-import XpadJsonBuild_1 --hidden-import XpadJsonBuild_2 --hidden-import XpadJsonBuild_data_pip
+# sudo pyinstaller XpadJsonBuild_GUI.py -p XpadJsonBuild_1.py -p XpadJsonBuild_2.py -p XpadJsonBuild_data_pip.py  -p BaseXpadJsonBuild.py --hidden-import XpadJsonBuild_1 --hidden-import XpadJsonBuild_2 --hidden-import XpadJsonBuild_data_pip --hidden-import BaseXpadJsonBuild
 
 filename = None
 path = None
@@ -18,28 +14,15 @@ selectValue: IntVar = None
 listBox: Listbox = None
 
 
-def insertListBoxMessage(item):
-    global listBox
-    listBox.insert("end", item)
-    listBox.see(END)
-
-
-def selectPath():
-    global filename
-    global path
-    filename = filedialog.askopenfilename(filetypes=[("excel格式", "xlsx")])
-    path.set(filename)
-
-
 def startCreateJson():
     global selectValue
     value = selectValue.get()
     if value == 1:
-        XpadJsonBuild_1.creatMainUi()
+        XpadJsonBuild_1.XpadJsonBuild1().creatMainUi()
     if value == 2:
-        XpadJsonBuild_2.creatMainUi()
+        XpadJsonBuild_2.XpadJsonBuild2().creatMainUi()
     if value == 3:
-        XpadJsonBuild_data_pip.creatMainUi()
+        XpadJsonBuild_data_pip.XpadJsonBuildDataPip().creatMainUi()
 
 
 def creatMainUi():
