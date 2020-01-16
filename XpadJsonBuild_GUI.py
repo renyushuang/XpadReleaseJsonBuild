@@ -5,8 +5,8 @@ import XpadJsonBuild_1
 import XpadJsonBuild_2
 import XpadJsonBuild_data_pip
 
-# 生成应用
 # sudo pyinstaller XpadJsonBuild_GUI.py -p XpadJsonBuild_1.py -p XpadJsonBuild_2.py -p XpadJsonBuild_data_pip.py  -p BaseXpadJsonBuild.py --hidden-import XpadJsonBuild_1 --hidden-import XpadJsonBuild_2 --hidden-import XpadJsonBuild_data_pip --hidden-import BaseXpadJsonBuild
+# 生成应用
 
 filename = None
 path = None
