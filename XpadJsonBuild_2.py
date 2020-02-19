@@ -6,6 +6,7 @@ from tkinter import filedialog
 from tkinter import ttk
 
 import openpyxl
+from openpyxl.worksheet.worksheet import Worksheet
 
 from BaseXpadJsonBuild import *
 
