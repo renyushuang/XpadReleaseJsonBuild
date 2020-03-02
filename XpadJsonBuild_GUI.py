@@ -6,7 +6,7 @@ import XpadJsonBuild_1
 import XpadJsonBuild_2
 import XpadJsonBuild_data_pip
 
-# sudo pyinstaller XpadJsonBuild_GUI.py -p XpadJsonBuild_1.py -p CoinSDKJsonBuildV_3.py -p XpadJsonBuild_2.py -p XpadJsonBuild_data_pip.py  -p BaseXpadJsonBuild.py --hidden-import XpadJsonBuild_1 --hidden-import XpadJsonBuild_2 --hidden-import XpadJsonBuild_data_pip --hidden-import BaseXpadJsonBuild --hidden-import CoinSDKJsonBuildV_3
+# sudo pyinstaller XpadJsonBuild_GUI.py -p XpadJsonBuild_1.py -p CoinSDKJsonBuildV_3.py -p XpadJsonBuild_2.py -p XpadJsonBuild_data_pip.py  -p BaseXpadJsonBuild.py
 # 生成应用
 
 filename = None
