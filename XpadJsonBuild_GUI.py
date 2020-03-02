@@ -1,11 +1,12 @@
 from tkinter import *
 from tkinter import ttk
 
+import CoinSDKJsonBuildV_3
 import XpadJsonBuild_1
 import XpadJsonBuild_2
 import XpadJsonBuild_data_pip
 
-# sudo pyinstaller XpadJsonBuild_GUI.py -p XpadJsonBuild_1.py -p XpadJsonBuild_2.py -p XpadJsonBuild_data_pip.py  -p BaseXpadJsonBuild.py --hidden-import XpadJsonBuild_1 --hidden-import XpadJsonBuild_2 --hidden-import XpadJsonBuild_data_pip --hidden-import BaseXpadJsonBuild
+# sudo pyinstaller XpadJsonBuild_GUI.py -p XpadJsonBuild_1.py -p CoinSDKJsonBuildV_3.py -p XpadJsonBuild_2.py -p XpadJsonBuild_data_pip.py  -p BaseXpadJsonBuild.py --hidden-import XpadJsonBuild_1 --hidden-import XpadJsonBuild_2 --hidden-import XpadJsonBuild_data_pip --hidden-import BaseXpadJsonBuild --hidden-import CoinSDKJsonBuildV_3
 # 生成应用
 
 filename = None
@@ -23,7 +24,8 @@ def startCreateJson():
         XpadJsonBuild_2.XpadJsonBuild2().creatMainUi()
     if value == 3:
         XpadJsonBuild_data_pip.XpadJsonBuildDataPip().creatMainUi()
-
+    if value == 4:
+        CoinSDKJsonBuildV_3.CoinSdkJsonBuildV3().creatMainUi()
 
 def creatMainUi():
     global path
@@ -51,6 +53,9 @@ def creatMainUi():
 
     rb3 = Radiobutton(middleFrame, text='data_pip.py', variable=selectValue, value=3)
     rb3.pack(side=LEFT)
+
+    rb4 = Radiobutton(middleFrame, text='CoinSdk3.0', variable=selectValue, value=4)
+    rb4.pack(side=LEFT)
 
     ttk.Button(middleFrame, text="选择", command=startCreateJson).pack(side=LEFT, padx=5, pady=10)
 

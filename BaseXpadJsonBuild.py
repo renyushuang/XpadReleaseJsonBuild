@@ -69,8 +69,8 @@ class BaseXpadJsonBuild:
     def findTitleInColum(self, name, adSheet):
         maxColumn = int(adSheet.max_column)
         for columnIndex in range(0, maxColumn):
-            titleValue = adSheet.cell(row=1, column=columnIndex + 1).value
-            if titleValue == name:
+            titleValue: str = adSheet.cell(row=1, column=columnIndex + 1).value
+            if titleValue.lower() == name.lower():
                 return columnIndex + 1
 
         self.insertListBoxMessage("title 不存在 -- " + name)
