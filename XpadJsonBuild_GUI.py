@@ -65,7 +65,10 @@ def creatMainUi():
     title: Text = Text(bottomFrame, width=50, height=5)
     title.pack(side=TOP, padx=5, pady=10)
     title.insert(INSERT, "简介")
-    content = '\n1.0 : Xpad1.0 广告json 生成工具 \n2.0 : Xpad2.0 广告json 生成工具 \ndata_pip : 产品数据通道 广告配置'
+    content = '\n1.0 : Xpad1.0 广告json 生成工具 ' \
+              '\n2.0 : Xpad2.0 广告json 生成工具 ' \
+              '\ndata_pip : 产品数据通道 广告配置' \
+              '\nCoinSdk3.0:金币SDK 广告json生成工具'
     title.insert(INSERT, content)
     title.config(state=DISABLED, font=("Arial", 20))
 
