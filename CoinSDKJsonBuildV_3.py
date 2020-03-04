@@ -340,7 +340,7 @@ class CoinSdkJsonBuildV3(BaseXpadJsonBuild):
         platform_ids.append({"id": csjAppId, "type": "csj"})
         platform_ids.append({"id": kshAppId, "type": "ks"})
         platform_ids.append({"id": ylhAppId, "type": "gdt"})
-        platform_ids.append({"id": ylhAppId, "type": "baidu"})
+        platform_ids.append({"id": baiduAppId, "type": "baidu"})
 
         ad_ids_config_v3 = {}
         self.mAdResultMap["ad_ids_config_v3"] = ad_ids_config_v3
