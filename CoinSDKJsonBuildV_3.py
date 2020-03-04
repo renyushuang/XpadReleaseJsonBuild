@@ -237,12 +237,15 @@ class CoinSdkJsonBuildV3(BaseXpadJsonBuild):
                 adPriorityList = []
                 slot[sidValue] = channelDatas
             else:
+                pass
                 # 跳过不属于当前单元格的输出
-                merged_value = self.get_merged_cells_value(adSheet, currentIndex, 4)
+
+                merged_value = self.get_merged_cells_value(adSheet, currentIndex, self.findTitleInColum("sid", adSheet))
+                print("merged_value" + str(merged_value))
                 if not slot.__contains__(merged_value):
                     continue
 
-            merged_value = self.get_merged_cells_value(adSheet, currentIndex, 4)
+            merged_value = self.get_merged_cells_value(adSheet, currentIndex, self.findTitleInColum("sid", adSheet))
 
             platformValue = self.getCloumeValueColumValue(currentIndex, "广告渠道", adSheet)
             if platformValue is None:
@@ -330,12 +333,14 @@ class CoinSdkJsonBuildV3(BaseXpadJsonBuild):
         csjAppId = self.getTitleColumValue("穿山甲appid", adSheet)
         ylhAppId = self.getTitleColumValue("广点通appid", adSheet)
         kshAppId = self.getTitleColumValue("快手appid", adSheet)
+        baiduAppId = self.getTitleColumValue("百度appid", adSheet)
 
         platform_ids = []
         self.mAdResultMap["platform_ids"] = platform_ids
         platform_ids.append({"id": csjAppId, "type": "csj"})
         platform_ids.append({"id": kshAppId, "type": "ks"})
         platform_ids.append({"id": ylhAppId, "type": "gdt"})
+        platform_ids.append({"id": ylhAppId, "type": "baidu"})
 
         ad_ids_config_v3 = {}
         self.mAdResultMap["ad_ids_config_v3"] = ad_ids_config_v3
@@ -423,11 +428,6 @@ class CoinSdkJsonBuildV3(BaseXpadJsonBuild):
         self.insertListBoxMessage("请选择路径 :")
 
         root.mainloop()
-
-    def getCoinSdkType(self, adExtraType):
-
-        pass
-
 
 if __name__ == '__main__':
     argLen = len(sys.argv)
